@@ -1,4 +1,5 @@
 import { getCustomers } from "@/lib/supabase";
+import { normalizeCustomerRecord } from "@/lib/customers";
 import { CustomersTable } from "@/components/customers/customers-table";
 
 export const dynamic = 'force-dynamic';
@@ -19,11 +20,15 @@ export default async function CustomersPage(props) {
     error = "Unable to load customers";
   }
 
+  // Normalize raw Supabase records — converts enrollments/turf_bookings
+  // from [{ count: N }] objects to plain numbers so React can render them
+  const normalizedCustomers = (customersData?.customers || []).map(normalizeCustomerRecord);
+
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Customers</h1>
       <CustomersTable
-        initialCustomers={customersData?.customers || []}
+        initialCustomers={normalizedCustomers}
         initialTotal={customersData?.total || 0}
         initialPage={page}
         initialPageSize={pageSize}
@@ -32,3 +37,4 @@ export default async function CustomersPage(props) {
     </div>
   );
 }
+
