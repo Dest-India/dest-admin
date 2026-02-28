@@ -1,4 +1,4 @@
-# Dest Admin
+## Dest Admin
 
 Dest Admin is the upcoming control center for Dest. This workspace mirrors the conventions used in dest-user and dest-partners and will evolve to cover:
 
